@@ -1,0 +1,24 @@
+﻿SELECT 
+  db."name", 
+  db.description, 
+  db.urlprefix, 
+  db.url, 
+  db.db_id
+FROM 
+  public.cvterm gene, 
+  public.cvterm_relationship is_a_relationship, 
+  public.cvterm biological_region, 
+  public.dbxref, 
+  public.cvterm is_a_cvterm, 
+  public.dbxref is_a_dbxref, 
+  public.db
+WHERE 
+  gene.cvterm_id = is_a_relationship.subject_id AND
+  is_a_relationship.object_id = biological_region.cvterm_id AND
+  is_a_relationship.type_id = is_a_cvterm.cvterm_id AND
+  biological_region.dbxref_id = dbxref.dbxref_id AND
+  is_a_cvterm.dbxref_id = is_a_dbxref.dbxref_id AND
+  is_a_dbxref.db_id = db.db_id AND
+  gene.cv_id = 10 AND 
+  gene."name" = 'gene' AND 
+  biological_region."name" = 'biological_region';
