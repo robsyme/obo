@@ -1,6 +1,8 @@
 = obo
 
-Description goes here.
+The OBO format is used to describe ontologies, commonly used in biology. The format is defined at {geneontology.org}[http://www.geneontology.org/GO.format.obo-1_2.shtml]. At the moment, the parser is pretty bare-bones and is enough for me to easily get ontologies into a db. 
+
+The parser (over)uses Enumerators to ensure that you can parse arbitrarily large files. I'm very happy to have feedback about the merits (or lack of merit) of this approach.
 
 == Contributing to obo
  
