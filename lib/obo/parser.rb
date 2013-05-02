@@ -4,44 +4,29 @@ require_relative 'stanza'
 module Obo
   class Parser
     STANZA_START = /^\[(.*?)\]/
-    TAG_VALUE = /^(.*?):([^!]*)/
+    TAG_VALUE    = /^(.*?):([^!]*)/
 
     def initialize(filename)
       @header = nil
-      @io = File.open(filename)
+      @io     = File.open(filename)
     end
 
     def elements(io = @io)
       Enumerator.new do |yielder|
-        header = Header.new
-        previous_line_position = io.pos
-        line = lines.next
+        header             = Header.new
+        prev_line_position = io.pos
+        line               = lines.next
+
         until line.is_a? Stanza
           header.add(*line)
-          previous_line_position = io.pos
-          line = lines.next
+          prev_line_position = io.pos
+          line               = lines.next
         end
+
         yielder << header
-        io.pos = previous_line_position
+        io.pos = prev_line_position
 
-        stanzas.each{|stanza| yielder << stanza}
-      end
-    end
-
-    def stanzas
-      Enumerator.new do |yielder|
-        stanza = lines.first{|line| line.is_a? Stanza}
-
-        lines.each do |line|
-          case line
-          when Array
-            stanza.add(*line)
-          when Stanza
-            yielder << stanza
-            stanza = line
-          end
-        end
-
+        stanzas.each { |stanza| yielder << stanza }
       end
     end
 
@@ -50,6 +35,27 @@ module Obo
     end
 
     private
+
+    def stanzas
+      Enumerator.new do |yielder|
+        stanza = lines.first { |line| line.is_a? Stanza }
+
+        begin
+          while line = lines.next
+            case line
+            when Array
+              stanza.add(*line)
+            when Stanza
+              yielder << stanza
+              stanza = line
+            end
+          end
+        rescue StopIteration
+          yielder << stanza
+        end
+
+      end
+    end
 
     # Yields lines that are either Stanza name or tag-value pairs
     def lines(io = @io)

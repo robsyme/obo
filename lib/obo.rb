@@ -1,4 +1,5 @@
 module Obo
+  VERSION = "0.1.1"
 end
 
 require_relative 'obo/header'
