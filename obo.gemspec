@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "obo"
-  s.version = "0.1.1"
+  s.version = "0.1.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["robsyme"]
-  s.date = "2013-05-02"
+  s.date = "2013-05-03"
   s.description = "The OBO format is the text file format used by OBO-Edit, the open-source, platform-independent application for viewing and editing ontologies. The format is described here: http://www.geneontology.org/GO.format.obo-1_2.shtml"
   s.email = "rob.syme@gmail.com"
   s.extra_rdoc_files = [
@@ -32,13 +32,14 @@ Gem::Specification.new do |s|
     "test/data/ro.obo",
     "test/data/so_2_4_3.obo",
     "test/data/temp",
+    "test/data/testfile.txt",
     "test/helper.rb",
     "test/test_obo.rb"
   ]
   s.homepage = "http://github.com/robsyme/obo"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
-  s.rubygems_version = "2.0.0"
+  s.rubygems_version = "2.0.0.rc.2"
   s.summary = "A parser for the OBO flat file format"
 
   if s.respond_to? :specification_version then
