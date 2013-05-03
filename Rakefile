@@ -1,6 +1,7 @@
 # encoding: utf-8
 
 #require 'rubygems'
+require 'bundler/gem_tasks'
 require 'bundler'
 
 begin
@@ -12,22 +13,8 @@ rescue Bundler::BundlerError => e
 end
 
 require 'rake'
-
-require 'jeweler'
-Jeweler::Tasks.new do |gem|
-  # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
-  gem.name = "obo"
-  gem.homepage = "http://github.com/robsyme/obo"
-  gem.license = "MIT"
-  gem.summary = %Q{A parser for the OBO flat file format}
-  gem.description = %Q{The OBO format is the text file format used by OBO-Edit, the open-source, platform-independent application for viewing and editing ontologies. The format is described here: http://www.geneontology.org/GO.format.obo-1_2.shtml}
-  gem.email = "rob.syme@gmail.com"
-  gem.authors = ["robsyme"]
-  # dependencies defined in Gemfile
-end
-Jeweler::RubygemsDotOrgTasks.new
-
 require 'rake/testtask'
+
 Rake::TestTask.new(:test) do |test|
   test.libs << 'lib' << 'test'
   test.pattern = 'test/**/test_*.rb'
