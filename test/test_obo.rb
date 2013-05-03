@@ -2,7 +2,6 @@ require 'helper'
 require "pp"
 
 class TestObo < MiniTest::Unit::TestCase
-
   def setup
     @obo = Obo::Parser.new('test/data/ro.obo')
 #    @obo = Obo::Parser.new('test/data/so_2_4_3.obo')
@@ -35,7 +34,17 @@ class TestObo < MiniTest::Unit::TestCase
   end
 
   def test_readthrough
-    assert_equal 26, @obo.elements.count
+    assert_equal 27, @obo.elements.count
+  end
+
+  def test_term_extraction
+    typedefs = []
+
+    @obo.elements.each do |elm|
+      typedefs << elm
+    end
+
+    assert_equal 26, typedefs.select { |e| e.class == Obo::Stanza && e.name == "Typedef" }.size
   end
 
   def test_rewind
@@ -43,9 +52,8 @@ class TestObo < MiniTest::Unit::TestCase
     @obo.elements.count
     assert_raises(StopIteration){@obo.elements.count}
     @obo.rewind
-    assert_equal 26, @obo.elements.count
+    assert_equal 27, @obo.elements.count
   end
-  
 end
 
 
