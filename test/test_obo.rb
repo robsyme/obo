@@ -4,7 +4,6 @@ require "pp"
 class TestObo < MiniTest::Unit::TestCase
   def setup
     @obo = Obo::Parser.new('test/data/ro.obo')
-#    @obo = Obo::Parser.new('test/data/so_2_4_3.obo')
   end
 
   def test_header_parsing
@@ -50,8 +49,6 @@ class TestObo < MiniTest::Unit::TestCase
   def test_rewind
     # Run through the file to the end
     @obo.elements.count
-    assert_raises(StopIteration){@obo.elements.count}
-    @obo.rewind
     assert_equal 27, @obo.elements.count
   end
 end
