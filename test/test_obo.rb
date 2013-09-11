@@ -20,9 +20,32 @@ class TestObo < MiniTest::Unit::TestCase
     assert_equal 'Typedef', first_stanza.name
     assert_equal 'OBO_REL:is_a', first_stanza['id']
     assert_equal 'is_a', first_stanza['name']
+      
     assert first_stanza['is_reflexive']
   end
 
+  def test_stanza_fields_and_values
+    @obo = Obo::Parser.new('test/data/so_2_4_3.obo')
+    terms = []
+
+    @obo.elements.each do |elm|
+      terms << elm
+    end
+
+    sofa = terms[1]
+    assert_equal "SO:0000000", sofa["id"] 
+    assert_equal "Sequence_Ontology", sofa["name"]
+    assert_equal "SOFA", sofa["subset"]
+    assert_equal true, sofa.is_obsolete
+
+    region = terms[2]
+    assert_equal "SO:0000001", region["id"]
+    #tests stripping of comments
+    assert_equal "SO:0000110", region["is_a"]    
+    assert_equal %{"sequence" EXACT []}, region["synonym"] 
+      
+  end
+  
   def test_fancy_methods
     first_stanza = @obo.elements.find{|element| element.is_a? Obo::Stanza}
     assert_equal 'OBO_REL:is_a', first_stanza.id
@@ -51,6 +74,8 @@ class TestObo < MiniTest::Unit::TestCase
     @obo.elements.count
     assert_equal 27, @obo.elements.count
   end
+  
 end
+
 
 

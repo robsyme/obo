@@ -4,7 +4,7 @@ require_relative 'stanza'
 module Obo
   class Parser
     STANZA_START = /^\[(.*?)\]/
-    TAG_VALUE    = /^(.*?):\s*([^!]*)\n/
+    TAG_VALUE    = /^(.*?):\s*([^!]*)\s*(.*?)\n/
 
     def initialize(filename)
       @io = File.open(filename)
@@ -25,7 +25,7 @@ module Obo
         while io.gets
           case $_
           when TAG_VALUE
-            stanza.add($1, $2)
+            stanza.add($1, $2.strip)
           when STANZA_START
             yielder << stanza
             stanza = Stanza.new($1.strip)
